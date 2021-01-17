@@ -9,7 +9,8 @@ namespace RazorGeneratorUtility
     {
         static void Main(string[] args)
         {
-            var SlnPath = "C:\\test\\toyota-main-site-9.2\\Toyota.MainSite\\Toyota.MainSite.sln";
+
+            var SlnPath = args[0]; 
             var Content = File.ReadAllText(SlnPath);
             Regex projReg = new Regex(
                 "Project\\(\"\\{[\\w-]*\\}\"\\) = \"([\\w _]*.*)\", \"(.*\\.(cs|vcx|vb)proj)\""
