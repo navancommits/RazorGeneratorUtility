@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorGeneratorUtility", "RazorGeneratorUtility\RazorGeneratorUtility.csproj", "{C7287300-C096-4ED3-A2AA-70AD7E4EE160}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7287300-C096-4ED3-A2AA-70AD7E4EE160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7287300-C096-4ED3-A2AA-70AD7E4EE160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7287300-C096-4ED3-A2AA-70AD7E4EE160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7287300-C096-4ED3-A2AA-70AD7E4EE160}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FD84368-4F19-4215-AD78-A157DC26EE03}
+	EndGlobalSection
+EndGlobal
