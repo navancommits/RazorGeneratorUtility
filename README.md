@@ -3,4 +3,4 @@
 - Could save someone their time since I didn't know initially that RazorGenerator.MsBuild is cleaner....
 
 0.4 release:
-Converts cshtml to precompiled views: RazorGeneratorUtility.exe 7 <sln path> <grand par path>
+Converts cshtml to precompiled views: RazorGeneratorUtility.exe 7 sln path grand par path
