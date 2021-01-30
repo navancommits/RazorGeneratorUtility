@@ -5,6 +5,7 @@
 
 Prerequisites:
 Needs a packages.config for each csproj
+Must have a patch config for <sites>
 
 Known issues:
 - packages folder location is hard-coded and that relative location might have to be fine-tuned depending on your proj location
