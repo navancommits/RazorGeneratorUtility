@@ -24,12 +24,12 @@ namespace RazorGeneratorUtility
             var path = args[1];
             var optionval = args[0];
             var grandparpath =args[2];
-            
+
             slnParentPath = Path.GetDirectoryName(path);
             slnName= Path.GetFileName(path);
             grandParentPath = grandparpath;
             option = Convert.ToInt16(optionval);
-            
+
             slnPath = slnParentPath + @"\" + slnName;//@"C:\Projects\xyz\zyy-main-site-9.2\zxczx.MainSite\zxzz.Mainsite.sln";
 
             switch (option)
@@ -84,7 +84,7 @@ namespace RazorGeneratorUtility
                         Projects[i]);
                 Projects[i] = Path.GetFullPath(Projects[i]);
 
-                //process to remove razor mvc generated cs and add msbuild ref starts here                
+                //process to remove razor mvc generated cs and add msbuild ref starts here
                 BlankRazorGeneratedLines(Projects[i]);// revert .generated.cs changes
                 ReplaceGeneratedLinesStartingwithNone(Projects[i],"None");// undo generated.cs back to cshtml
                 BlankRazorGeneratorMvcStartLines(Projects[i]);
@@ -110,10 +110,10 @@ namespace RazorGeneratorUtility
                         Projects[i]);
                 Projects[i] = Path.GetFullPath(Projects[i]);
 
-                //process to remove ns name ref               
-                BlankNamespaceReferences(Projects[i], namespaceName);                 
+                //process to remove ns name ref
+                BlankNamespaceReferences(Projects[i], namespaceName);
             }
-            
+
         }
 
         private static void ConvertCshtmlProjectstoCompiledViews()
@@ -195,7 +195,7 @@ namespace RazorGeneratorUtility
                 fileChanged = false;
                 while (null != (currline = input.ReadLine()))
                 {
-                    
+
                     concatLines += currline + Environment.NewLine;
 
                 }
@@ -253,16 +253,16 @@ namespace RazorGeneratorUtility
         {
             string cshtmlPath = string.Empty;
             string newline = string.Empty;
-            var openingLines = "<configuration xmlns:patch=\"http://www.sitecore.net/xmlconfig/\" xmlns:role=\"http://www.sitecore.net/xmlconfig/role/\" >\r  <sitecore>\r\t<settings>\r\t\t\t<setting name=\"Mvc.UsePhysicalViewsIfNewer\" value=\"true\" />\r\t</settings>\r";
-            var endingLines = "\r  </sitecore>\r</configuration>";
-            var projListStartString = "\t<mvc>\r\t\t    <precompilation>\r\t\t\t      <assemblies>\r ";
-            var projListEndString = "\r\t\t\t      </assemblies>\r\t\t    </precompilation>\r\t</mvc> ";
+            var openingLines = "<configuration xmlns:patch=\"http://www.sitecore.net/xmlconfig/\" xmlns:role=\"http://www.sitecore.net/xmlconfig/role/\" >" + Environment.NewLine + "  <sitecore>" + Environment.NewLine + "    <settings>" + Environment.NewLine + "      <setting name=\"Mvc.UsePhysicalViewsIfNewer\" value=\"true\" />" + Environment.NewLine + "    </settings>";
+            var endingLines = Environment.NewLine + "  </sitecore>" + Environment.NewLine + "</configuration>";
+            var projListStartString = Environment.NewLine + "    <mvc>" + Environment.NewLine + "      <precompilation>" + Environment.NewLine + "        <assemblies>";
+            var projListEndString = Environment.NewLine + "        </assemblies>" + Environment.NewLine + "      </precompilation>" + Environment.NewLine + "    </mvc> ";
             var projectListString = string.Empty;
 
             foreach (var project in projectList)
             {
-               
-                projectListString += "\r\t\t\t\t        <assemblyIdentity name=\"" + project + "\" />";
+
+                projectListString += Environment.NewLine + "          <assemblyIdentity name=\"" + project + "\" />";
             }
             var concatLines = openingLines + projListStartString + projectListString + projListEndString + endingLines;
 
@@ -283,7 +283,7 @@ namespace RazorGeneratorUtility
 
             foreach (var project in projectList)
             {
-                
+
                 projectListString += "\r        <assemblyIdentity name=\"" + project + "\" />";
             }
             var concatLines = openingLines + projListStartString + projectListString  + projListEndString + endingLines;
@@ -301,7 +301,7 @@ namespace RazorGeneratorUtility
                 var configFilePath = SitesConfigurationFound(configs[i]);
                 if (!string.IsNullOrWhiteSpace(configFilePath))
                 {
-                    
+                    //File.WriteAllText(@"temp1.csproj", concatLines);
                     if (!File.Exists(Path.GetDirectoryName(folderPath) + @"\" + configFileName)) {
                         using (FileStream fs = File.Create(folderPath + @"\" + configFileName))
                         {
@@ -310,6 +310,8 @@ namespace RazorGeneratorUtility
                         }
                     }
 
+                    //File.Replace("temp1.csproj", Path.GetDirectoryName(configFilePath) + @"\" + configFileName, null);
+                    //File.Delete("temp1.csproj");
                 }
 
                 //
@@ -321,9 +323,9 @@ namespace RazorGeneratorUtility
 
         private static string SitesConfigurationFound(string filePath)
         {
-            
+
             var configFilePath = string.Empty;
-            if (!filePath.Contains("App_Config\\Include"))  return configFilePath; 
+            if (!filePath.Contains("App_Config\\Include"))  return configFilePath;
 
             using (var input = File.OpenText(filePath))
             using (var output = new StreamWriter("temp.csproj"))
@@ -386,7 +388,7 @@ namespace RazorGeneratorUtility
         }
 
         private static bool FindAutoGeneratedFilesinFS()
-        {            
+        {
             string[] files = Directory.GetFiles(grandParentPath, "*.generated.cs", SearchOption.AllDirectories);
             bool found = false;
 
@@ -415,7 +417,7 @@ namespace RazorGeneratorUtility
             Console.WriteLine("Deleted all RazorGeneratorMvcStart.cs files from filesystem");
         }
 
-        
+
         private static string GetSubString(string stringVal, string string1,string string2)
         {
 
@@ -446,7 +448,7 @@ namespace RazorGeneratorUtility
                     if (currline.Contains("Content") && currline.Contains("Include=")  && currline.Contains(".cshtml"))
                     {
                         cshtmlPath = GetSubString(currline, "\"", "\"");
-                        
+
                         lastIndexofSlash= cshtmlPath.LastIndexOf(@"\");
                         indexofCshtml = cshtmlPath.IndexOf(@".");
                         fileStringLength = indexofCshtml - lastIndexofSlash;
@@ -455,20 +457,20 @@ namespace RazorGeneratorUtility
 
                         fileChanged = true;
                         concatLines += newline;
-                        
+
                     }
                     else
                     {
                         concatLines += currline + "\r";
                     }
                 }
-               
+
             }
             if (fileChanged)
             {
 
                 File.WriteAllText(@"temp1.csproj", concatLines);
-                    
+
                 File.Replace("temp1.csproj", filePath, null);
                 File.Delete("temp1.csproj");
             }
@@ -563,7 +565,7 @@ namespace RazorGeneratorUtility
                         }
 
                 }
-            
+
             }
             if (fileChanged)
             {
@@ -626,7 +628,7 @@ namespace RazorGeneratorUtility
 
         private static void FindGeneratedCSReferences()
         {
-            
+
             var Content = File.ReadAllText(slnPath);
             Regex projReg = new Regex(
                 "Project\\(\"\\{[\\w-]*\\}\"\\) = \"([\\w _]*.*)\", \"(.*\\.(cs|vcx|vb)proj)\""
@@ -653,7 +655,7 @@ namespace RazorGeneratorUtility
             bool found = false;
 
             using (var input = File.OpenText(filePath))
-            { 
+            {
                 string currline;
                 while (null != (currline = input.ReadLine()))
                 {
@@ -662,7 +664,7 @@ namespace RazorGeneratorUtility
                         Console.WriteLine(filePath + " : " + currline + "\r");
                         found = true;
                     }
-                   
+
                 }
 
             }
@@ -811,7 +813,7 @@ namespace RazorGeneratorUtility
                         {
                             concatLines += currline + "\r";
                         }
-                   
+
 
                 }
 
@@ -843,7 +845,7 @@ namespace RazorGeneratorUtility
                 fileChanged = false;
                 while (null != (currline = input.ReadLine()))
                 {
-                    
+
                         // optionally modify line.
                         if (currline.Contains("Compile") && currline.Contains("Include=") && currline.Contains("App_Start\\RazorGeneratorMvcStart.cs"))
                         {
@@ -965,7 +967,7 @@ namespace RazorGeneratorUtility
                 fileChanged = false;
                 while (null != (currline = input.ReadLine()))
                 {
-                       
+
                             if (!tracktarget)
                             {
                                 if (currline.Contains("<Target Name=\"EnsureNuGetPackageBuildImports\" BeforeTargets=\"PrepareForBuild\">"))
